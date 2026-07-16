@@ -38,15 +38,16 @@ They balance **accuracy**, **interpretability**, **scalability**, and **business
 RideWise has:
 - 25% quarterly churn  
 - behavioural + transactional + promotional + external features  
-- a need for **interpretability** (business stakeholders must understand *why* customers churn)
+- a need for interpretability (business stakeholders must understand why customers churn)
 
-### Best Model: Random Forest
-**Why Random Forest fits RideWise perfectly:**
-- Handles mixed data types (categorical + numeric)  
+Model choice: 
+Primary Model - Random Forest
+Why Random Forest fits RideWise perfectly:
+- Handles mixed data types (categorical and numerical)  
 - Works well with behavioural features (RFM, usage patterns, cancellations)  
 - Captures non‑linear relationships  
-- Provides feature importance → crucial for business explainability  
-- Robust to noise and missing values  
+- Provides feature importance which is crucial for business explainability  
+- This reduces noise and missing values.  
 - Performs strongly even without heavy hyperparameter tuning  
 
 ### Secondary Model (for comparison): Logistic Regression  
@@ -99,3 +100,26 @@ RideWise needs real‑time scoring → the best approach is:
 
 
 ### My brief understanding of what ML FLOW IS AND HOW TO TRAIN A MODEL. WHY DO WE TRAIN MODELS 
+- ML flow is a full AI engineering platform that supports modern AI systems like LLMs - large Language Models, AI agents, and classic ML models.
+- ML flow is an open source platform (largest open source) used to manage ML - Machine Learning lifecycle, including expereimentation, reproducibility, deployment, and a central model registery. 
+- If offers 4 componenets. - ML flow tracking (expereiment tracking), ML flow projects, ML Flow models, and Model Registery. 
+- ML flow is an experiment tracking tool. It can be used to deploy your model. 
+- Lots of platforms support the use of ML flow. Pytouch, tensorflow, Google cloud, AWS cloud, Docker, Fastai, XGboost, kubernetes, Azure Machine learning, keras, spark MLlib databricks.
+- ML flow is my project’s “control centre” where I can log metrics (accuracy, recall, precision, AUC), log parameters (learning rate, model type, features used), save the models used, compare experiments (which model performed best,which parameters worked, which feature set was strongest), register the best model, and prepare it for deployment. It removes chaos and replaces it with structure. 
+SOURCE: COPILOT. 
+- MLflow give you the freedom to use multiple models (Logistic Regression, Random Forest, XGBoost etc.), multiple feature sets, multiple preprocessing pipelines and multiple hyperparameters. This helps to pick the best performing model. 
+- MLflow enables you to export your trained model as a fully functional predictive service. It allows you to wrap/package your MLflow model, Dockerfile, prediction API (FastAPI or Flask), and all environment dependencies into a Docker container, ensuring scalable, portable, and production‑ready deployment.
+
+
+LLMs stands for Large Language Models. It refers to AI models (like GPT‑style models) that are trained on massive amounts of text so they can understand language, generate responses, summarise information, write code, and more.
+
+- Some of the benefits of ML flow tracking are Benefits:
+
+Experiment Organization: Track and compare multiple model experiments
+Metric Visualization: Built-in plots and charts for model performance
+Artifact Storage: Store models, plots, and other files with each run
+Collaboration: Share experiments and results across teams. 
+
+MLflow is vendor-neutral; whether you're building AI agents, LLM applications, or ML models, it give access to MLflow's core capabilities — tracing, evaluation, experiment tracking, deployment, and more.
+
+- SOURCE : https://mlflow.org/docs/latest/ml/
