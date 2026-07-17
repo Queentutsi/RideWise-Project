@@ -98,6 +98,10 @@ RideWise needs real‑time scoring → the best approach is:
 - Streamlit for dashboards  
 
 
+Steps followed in cleaning my dataset. 
+
+
+
 
 ### My brief understanding of what ML FLOW IS AND HOW TO TRAIN A MODEL. WHY DO WE TRAIN MODELS 
 - ML flow is a full AI engineering platform that supports modern AI systems like LLMs - large Language Models, AI agents, and classic ML models.
