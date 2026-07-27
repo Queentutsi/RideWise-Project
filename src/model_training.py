@@ -162,6 +162,7 @@ r2_gb = r2_score(y_test, y_pred_gb)
 
 from xgboost import XGBRegressor
 
+
 xgb_reg = XGBRegressor(
     n_estimators=300,
     learning_rate=0.05,
@@ -208,21 +209,57 @@ r2_svr = r2_score(y_test, y_pred_svr)
 # =========================
 
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
 
+# Convert continuous churn_probability to binary churn label
 threshold = 0.5
 y_train_label = (y_train >= threshold).astype(int)
 y_test_label = (y_test >= threshold).astype(int)
 
-log_reg = LogisticRegression(max_iter=1000)
+# Train logistic regression classifier
+log_reg = LogisticRegression(max_iter=1000, class_weight='balanced', random_state=42)
 log_reg.fit(X_train_scaled, y_train_label)
+
+# Predictions
 y_pred_log_label = log_reg.predict(X_test_scaled)
 y_pred_log_prob = log_reg.predict_proba(X_test_scaled)[:, 1]
 
+# Classification metrics
 acc_log = accuracy_score(y_test_label, y_pred_log_label)
 prec_log = precision_score(y_test_label, y_pred_log_label)
 rec_log = recall_score(y_test_label, y_pred_log_label)
 f1_log = f1_score(y_test_label, y_pred_log_label)
 auc_log = roc_auc_score(y_test_label, y_pred_log_prob)
+
+# Confusion matrix
+cm = confusion_matrix(y_test_label, y_pred_log_label)
+print("\nConfusion Matrix:")
+print(cm)
+
+# Classification report
+print("\nClassification Report:")
+print(classification_report(
+    y_test_label,
+    y_pred_log_label,
+    target_names=["Not Churned", "Churned"]
+))
+
+fig, ax = plt.subplots(figsize=(5, 4))
+ax.matshow(cm, cmap="Blues", alpha=0.7)
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        ax.text(j, i, cm[i, j], ha="center", va="center")
+
+plt.title("Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+
+plt.savefig(
+    r"C:\Users\akand\OneDrive\Documents\data journey\Amdari Resources\DS Projects\Ridewise Project\Data\confusion_matrix.png",
+    dpi=300,
+    bbox_inches="tight"
+)
+plt.show()
 
 
 # =========================
@@ -254,7 +291,7 @@ plt.figure(figsize=(9, 5))
 plt.bar(results_reg["Model"], results_reg["MSE"], color="teal")
 plt.title("Model Comparison (MSE)")
 plt.ylabel("Mean Squared Error")
-plt.xticks(rotation=45)
+plt.xticks(rotation=80)
 plt.tight_layout()
 plt.savefig(
     r"C:\Users\akand\OneDrive\Documents\data journey\Amdari Resources\DS Projects\Ridewise Project\Data\MSE_comparison.png",
@@ -267,7 +304,7 @@ plt.figure(figsize=(9, 5))
 plt.bar(results_reg["Model"], results_reg["R2"], color="blue")
 plt.title("Model Comparison (R²)")
 plt.ylabel("R² Score")
-plt.xticks(rotation=45)
+plt.xticks(rotation=80)
 plt.tight_layout()
 plt.savefig(
     r"C:\Users\akand\OneDrive\Documents\data journey\Amdari Resources\DS Projects\Ridewise Project\Data\R2_comparison.png",
@@ -306,7 +343,10 @@ results_clf = pd.DataFrame([
     ["Logistic Regression", acc_log, prec_log, rec_log, f1_log, auc_log]
 ], columns=["Model", "Accuracy", "Precision", "Recall", "F1", "AUC"])
 
-fig, ax = plt.subplots(figsize=(10, 2))
+# ROUND TO 4 DECIMAL PLACES
+results_clf = results_clf.round(4)
+
+fig, ax = plt.subplots(figsize=(8, 5))
 ax.axis('tight')
 ax.axis('off')
 
