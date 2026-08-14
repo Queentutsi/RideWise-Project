@@ -1,0 +1,24 @@
+artifact_path: file:C:/Users/akand/OneDrive/Documents/data journey/Amdari Resources/DS
+  Projects/Ridewise Project/mlruns/1/models/m-be82d184f52b4ec7a3905fa0011b656a/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.6
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.0
+    skops_trusted_types: null
+mlflow_version: 3.14.0
+model_id: m-be82d184f52b4ec7a3905fa0011b656a
+model_size_bytes: 89512298
+model_uuid: m-be82d184f52b4ec7a3905fa0011b656a
+prompts: null
+run_id: d3d553c31185494f9247ec92ea67ef7b
+utc_time_created: '2026-07-28 15:54:04.941869'

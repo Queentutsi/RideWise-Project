@@ -99,6 +99,13 @@ RideWise needs real‑time scoring → the best approach is:
 
 
 Steps followed in cleaning my dataset. 
+1. Standardise column names
+2. Convert date columns
+3. Drop duplicates (for all datasets)
+4. Validate merge keys
+5. Merge datasets
+6. Save merged dataset
+7. Perform EDA
 
 
 

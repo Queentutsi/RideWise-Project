@@ -35,19 +35,27 @@ from sklearn.svm import SVC
 from imblearn.over_sampling import SMOTE
 import optuna
 from optuna.samplers import TPESampler
+import mlflow
+import mlflow.sklearn
 
 
 # =====================================================
 # 2. CONFIGURATION
 # =====================================================
 
+# =====================================================
+# 2. CONFIGURATION
+# =====================================================
+
 DATA_PATH = r"C:\Users\akand\OneDrive\Documents\data journey\Amdari Resources\DS Projects\Ridewise Project\Data\riders_ml_features.csv"
-SAVE_DIR = r"C:\Users\akand\OneDrive\Documents\data journey\Amdari Resources\DS Projects\Ridewise Project\Data"
+
+# Move all outputs OUTSIDE OneDrive to avoid PermissionError
+SAVE_DIR = r"C:\RideWise"
 FIGURES_DIR = os.path.join(SAVE_DIR, "Figures")
 
-THRESHOLD = 0.35
 os.makedirs(FIGURES_DIR, exist_ok=True)
 
+THRESHOLD = 0.35
 
 # =====================================================
 # 3. LOAD DATA
@@ -335,6 +343,23 @@ def main():
     plt.close()
 
     print("Saved: mutual_information_scores.csv and mutual_information_top20.png")
+
+    # MLFLOW LOGGING
+    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    mlflow.set_experiment("RideWise Churn Prediction")
+
+    with mlflow.start_run():
+
+        mlflow.log_param("model_name", best_model_name)
+        mlflow.log_param("optimal_threshold", best_threshold)
+
+        mlflow.log_metric("roc_auc", roc_auc_score(y_test, y_prob))
+        mlflow.log_metric("precision", precision_score(y_test, y_pred))
+        mlflow.log_metric("recall", recall_score(y_test, y_pred))
+        mlflow.log_metric("f1_score", f1_score(y_test, y_pred))
+
+        mlflow.sklearn.log_model(best_model, "model")
+
    
 
 if __name__ == "__main__":
